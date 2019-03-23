@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-minimal-blog",
-  "description": "Typography driven blog, focus on the content & minimal style. Powered by MDX. Live Preview with react-live.",
+  "name": "jordy-blog",
+  "description": "Jordy's attempt at writing a blog.",
   "version": "3.0.0",
-  "author": "LekoArts <hello@lekoarts.de> (https://www.lekoarts.de)",
+  "author": "Jordy van Domselaar <jordy.m.van.domselaar@gmail.com> (https://www.jordy.app)",
   "dependencies": {
     "@mdx-js/mdx": "^0.20.3",
     "@mdx-js/tag": "^0.20.3",
