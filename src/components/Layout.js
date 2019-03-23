@@ -204,8 +204,8 @@ const Layout = ({ children, customSEO }) => {
         <GlobalStyle />
         {children}
         <Footer>
-          &copy; 2019 by Jordy van Domselaar. All rights reserved. <br />
-          <a href="https://github.com/LekoArts/gatsby-starter-minimal-blog">GitHub Repository</a> <br />
+          &copy; {new Date().getUTCFullYear()} by Jordy van Domselaar. All rights reserved. <br />
+          <a href="https://github.com/jordyvandomselaar/jordy-blog">GitHub Repository</a> <br />
           <span>Last build: {buildTime}</span>
         </Footer>
       </>
