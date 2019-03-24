@@ -52,7 +52,14 @@ const Contact = () => (
       <Content>
         <h1>Contact</h1>
         <p>Found a typo or would you like me to write about something? Do tell!</p>
-        <form name="contact-form" method="post" data-netlify="true" data-netlify-honeypot="bot-field" action="/success">
+        <form
+          name="contact-form"
+          method="post"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          data-netlify-recaptcha="true"
+          action="/success"
+        >
           <p>
             <label htmlFor="contact-name">
               Name
@@ -69,9 +76,11 @@ const Contact = () => (
               Your Message <textarea name="message" id="contact-message" required />
             </label>
           </p>
+          <div data-netlify-recaptcha="true" />
           <p>
             <Button>Send</Button>
           </p>
+          <input type="text" name="bot-field" style={{ display: 'none' }} />
           <input type="hidden" name="form-name" value="contact-form" />
         </form>
       </Content>
