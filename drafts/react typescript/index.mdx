@@ -1,0 +1,201 @@
+---
+date: "2019-04-16"
+title: "Creating a to-do app using React and TypeScript"
+categories:
+  - React
+  - TypeScript
+  - To-do App
+---
+
+import CodeSandbox from "../../src/components/CodeSandbox";
+
+# [WIP] Using TypeScript with React
+
+In this post I'll be showing you how to build your first TypeScript to-do app. If you've used React with TypeScript before this tutorial probably isn't for you. To keep things simple I'll mainly be focussing on React itself.
+
+Inside `src/` you'll see folders with names that correspond to headers in this tutorial. Check inside for example code!
+
+## Getting started
+
+For this tutorial we'll be using [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app). To get started run the following commands in your terminal; `npx create-react-app todoApp —typescript`, this will scaffold a new TypeScript React app. _This could take a while._
+
+When it's done you'll have the following file structure;
+
+- README.md
+- node_modules
+- package-lock.json
+- package.json
+- public
+	- favicon.ico
+	- index.html
+	- manifest.json
+- src
+	- App.css
+	- App.test.tsx
+	- App.tsx
+	- index.css
+	- index.tsx
+	- logo.svg
+	- react-app-env.d.ts
+	- serviceWorker.ts
+- tsconfig.json
+
+
+To start a development server that automatically reloads your browser when changing code, run the following commands in your terminal;
+
+```sh
+cd todoApp
+npm start
+```
+
+Your default browser should open automatically. If it doesn't, open your browser and go to `http://localhost:3000` manually.
+
+You'll see the following screen:
+
+<CodeSandbox title="Getting started" url="https://codesandbox.io/embed/5klroqv26l" />
+
+Save for the SVG that's not rendering, but that's not important.
+
+## Cleaning up
+
+Before we get started building something, let's clean up some files we won't be needing for this project.
+
+Delete the following files;
+
+- App.css
+- App.test.tsx
+- App.tsx
+- index.css
+- logo.svg
+
+You'll notice you get a `ModuleNotFoundError` error. We'll fix that in the next step.
+
+## Creating your first component
+
+Let's create your first component!
+
+Inside the project create the following file; `src/components/App.tsx` with the following code;
+
+```jsx
+import React from "react";
+
+const App = () => {
+  return <h1>Welcome to my to-do app</h1>;
+};
+
+export default App;
+```
+
+Remember the error I told you about? To fix that, replace the code inside `index.tsx` with
+
+```typescript jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
+```
+
+Your browser should automatically refresh to show the following;
+
+<CodeSandbox title="Creating your first component" url="https://codesandbox.io/embed/l4w63r72om" />
+
+## Defining the domain
+
+Looking at our design we'll need the following components;
+
+1. A to-do list, you know, to render to-do's
+2. A to-do component, this will represent one to-do
+3. A form to create a new to-do
+    1. A submit button
+    2. An input to write what we have to do
+
+With that out of the way let's think about our domain for this app; What entities do we have? For our to-do app all we really need is a `Todo` entity. Let's create an `interface` for it.
+
+**Creating your first interface**
+
+Create the following file; `src/interfaces/Todo.ts`, notice the file extension is `.ts` instead of `.tsx`, since it won't contain any `JSX` (it will be plain TypeScript) you don't have to use `.tsx`.
+
+Our to-do will have the following fields;
+
+1. name
+2. finished
+
+`name` will be what we render inside the list, we'll use `finished` to determine if we've finished the to-do or not. 
+
+An example to-do would look like this; 
+
+```json
+{
+  "name": "My example to-do",
+  "finished": false
+}
+```
+
+As you can see `name` is a `string` and `finished` is a `boolean`.
+
+Using this information we end up with the following interface;
+
+```typescript
+interface Todo {
+    name: string;
+    finished: boolean;
+}
+```
+
+Put the following code inside `src/interfaces/Todo.ts`;
+
+```typescript
+export interface Todo {
+  name: string;
+  finished: boolean;
+}
+```
+
+## Creating static components
+
+Let's start building static components, they'll show what the app is going to look like but they won't be interactive yet.
+
+Create the following file; `src/components/TodoList.tsx` with the following contents;
+
+```typescript jsx
+import React from "react";
+import TodoListItem from "./TodoListItem"
+
+const TodoList = ({todos}) => {
+  return <ul>
+      {todos.map(todo => <TodoListItem todo={todo}>/>)}
+  </ul>;
+};
+
+export default TodoList;
+```
+
+It won't work yet since we don't have the other components yet. Let's build them as well;
+
+`src/components/TodoListItem.tsx`
+
+```typescript jsx
+import React from "react";
+
+const TodoListItem = ({todo}) => {
+    return (
+        <li><input type="checkbox" checked={todo.finished} />{todo.name}</li>
+    );
+};
+
+export default TodoListItem;
+```
+
+- `src/components/NewTodoForm.tsx`
+- `src/components/Button.tsx`
+- `src/components/Input.tsx`
+
