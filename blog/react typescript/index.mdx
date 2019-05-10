@@ -233,7 +233,7 @@ Let's start with our simple button.
 
 Create the following file: `src/components/TodoList.tsx` with the following code;
 
-```tsx
+```jsx
 import React from "react";
 
 const TodoList = () => {
@@ -249,7 +249,7 @@ export default TodoList;
 
 Right now we have no way to see what we're actually building. For now, replace the contents of `src/components/App.tsx` with the following code;
 
-```tsx
+```jsx
 import React from "react";
 import TodoList from "./TodoList";
 
@@ -267,19 +267,19 @@ export default App;
 
 You'll notice we've added the following:
 
-```tsx
+```jsx
 import TodoList from "./TodoList";
 ```
 
 this `imports` the component we just created into the `App` component.
 
-```tsx
+```jsx
 <TodoList />
 ```
 
 This renders our new component. You should now see something like this:
 
-![Preview of our TodoList component](./TodoList.png)
+![Preview of our TodoList component](./TodoList.png")
 
 You'll notice there is some base styling applied because we added Bootstrap.
 
@@ -287,7 +287,7 @@ Now, whenever we change the code inside `src/components/TodoList.tsx` the page w
 
 As we can see here; [https://getbootstrap.com/docs/3.4/components/#list-group](https://getbootstrap.com/docs/3.4/components/#list-group) Bootstrap has styling we can use for our list to make it look better. In `src/components/TodoList.tsx` replace
 
-```tsx
+```jsx
 <ul>
   <li>Our first to-do</li>
 </ul>
@@ -295,7 +295,7 @@ As we can see here; [https://getbootstrap.com/docs/3.4/components/#list-group](h
 
 with the following;
 
-```tsx
+```jsx
 <ul className="list-group">
   <li className="list-group-item">Our first to-do</li>
 </ul>
@@ -305,7 +305,7 @@ You'll notice we've added the `list-group` and `list-group-item` `classNames`.
 
 Typically you'd create a component for a single to-do in a list as well. To do (pun not intended) this create the following file: `src/components/TodoListItem` and add the following:
 
-```tsx
+```jsx
 import React from "react";
 
 const TodoListItem = () => {
@@ -319,7 +319,7 @@ Now to render our new component we can alter `src/components/TodoList.tsx`.
 
 Replace
 
-```tsx
+```jsx
 import React from "react";
 
 const TodoList = () => {
@@ -335,7 +335,7 @@ export default TodoList;
 
 with
 
-```tsx
+```jsx
 import React from "react";
 import TodoListItem from "./TodoListItem";
 
