@@ -16,8 +16,8 @@ import CodeSandbox from "../../src/components/CodeSandbox";
 - [Getting started](#getting-started)
 - [Cleaning up](#cleaning-up)
 - [Creating your first component](#creating-your-first-component)
-- [Adding some styling](#adding-some-styling)
-- [Defining the domain](#defining-the-domain)
+- [Adding basic styling](#adding-basic-styling)
+- [Creating your first interface](#creating-your-first-interface)
 - [Creating static components](#creating-static-components)
 - [State](#state)
   - [What is state?](#what-is-state)
@@ -129,7 +129,7 @@ Your browser should automatically refresh to show the following;
   url="https://codesandbox.io/embed/l4w63r72om"
 />
 
-## Adding some styling
+## Adding basic styling
 
 To provide our app with basic styling we'll be using Bootstrap in this tutorial. When creating your own app feel free to use any styling solution you prefer!
 
@@ -196,7 +196,7 @@ Notice the `<Link></Link>` tag inside `<head></head>`.
 
 You won't notice much different right away. We'll be using Bootstrap's classes to style our components from now on.
 
-## Defining the domain
+## Creating your first interface
 
 Looking at our design we'll need the following components;
 
@@ -211,8 +211,6 @@ With that out of the way let's think about our domain for this app; What entitie
 Interfaces allow us to specify what data we need and what it looks like. You can define an interface of any data you need. This includes properties, state, api responses and anything in between. By defining an interface you get advanced autocompletions and static type checking. What is means is that TypeScript can tell you if you mistakenly add the wrong data to a component or if you're trying to use a `string` property as a `number` before even running your app.
 
 The autocompletions are really neat as well. Most bigger JavaScript packages are written in TypeScript and thus contain types. What this means is that your editor can warn you if you're using a package in the wrong way and it can tell you about all the parameters a method expects in a package. This also works for components; you can now be warned about using the wrong properties of a component before you even run your app. You'll find this is incredibly useful when refactoring components or methods.
-
-**Creating your first interface**
 
 Create the following file; `src/interfaces/Todo.ts`, notice the file extension is `.ts` instead of `.tsx`, since it won't contain any `JSX` (it will be plain TypeScript) you don't have to use `.tsx`. It's still possible to use `tsx` if you like but as I said, it's not required.
 
