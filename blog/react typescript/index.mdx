@@ -208,7 +208,7 @@ Looking at our design we'll need the following components;
 
 With that out of the way let's think about our domain for this app; What entities do we have? For our to-do app all we really need is a `Todo` entity. Let's create an `interface` for it.
 
-Interfaces allow us to specify what data we need and what it looks like. You can define an interface of any data you need. This includes properties, state, api responses and anything in between. By defining an interface you get advanced autocompletions and static type checking. What is means is that TypeScript can tell you if you mistakenly add the wrong data to a component or if you're trying to use a `string` property as a `number` before even running your app.
+Interfaces allow us to specify what data we need and what it looks like. You can define an interface of any data you need. This includes properties, state, api responses and anything in between. By defining an interface you get advanced autocompletions and static type checking. What this means is that TypeScript can tell you if you mistakenly add the wrong data to a component or if you're trying to use a `string` property as a `number` before even running your app.
 
 The autocompletions are really neat as well. Most bigger JavaScript packages are written in TypeScript and thus contain types. What this means is that your editor can warn you if you're using a package in the wrong way and it can tell you about all the parameters a method expects in a package. This also works for components; you can now be warned about using the wrong properties of a component before you even run your app. You'll find this is incredibly useful when refactoring components or methods.
 
@@ -463,7 +463,7 @@ come up on your screen. Woohoo! 🎉️
 
 Now let's build a form so we can add more to-do's!
 
-To keep things simple we'll be using standard html inputs. In a production app you would most likely create separate components for them.
+To keep things simple we'll be using standard HTML inputs. In a production app you would most likely create separate components for them.
 
 Inside `src/components` create a new file: `TodoForm.tsx`, inside it add the following code;
 
@@ -525,7 +525,7 @@ You'll also notice we used
 {...props}
 ```
 
-This is called object destructuring. The `...` is called a [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) this allows us to pass all the properties that our component receives through to another component. _You can imagine that it gets extremely boring constantly passing hundreds of different properties around manually._
+This is called object destructuring. The `...` is called a [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) this allows us to pass all the properties, that our component receives, through to another component. _You can imagine that it gets extremely boring constantly passing hundreds of different properties around manually._
 
 Now, let's use our form!
 
@@ -552,7 +552,7 @@ The final product for this step should look like this:
 
 If it doesn't, feel free to open the code sandbox and check what went wrong!
 
-You can type in the input but submitting the form only seems to refresh te page. Hmmm, let's fix that. How? Glad you asked! By adding state. React ❤️ state.
+You can type in the input but submitting the form only seems to refresh the page. Hmmm, let's fix that. How? Glad you asked! By adding state. React ❤️ state.
 
 ## State
 
@@ -603,13 +603,13 @@ const App = () => {
 
 We've just added state to our `App` component. Easy right? We've told `App` that it has state called `todos` and it starts out with an empty `array`. Since we're using TypeScript we can tell `App` what kind of array it is as well!
 
-change
+To do this, change
 
 ```jsx
 const [todos, setTodos] = useState([]);
 ```
 
-to
+into
 
 ```jsx
 const [todos, setTodos] = useState < Array < Todo >> [];
@@ -703,7 +703,7 @@ setTodos([
 ]);
 ```
 
-This remove all existing todo's and add one new todo.
+This removes all existing todo's and adds one new todo.
 
 Or by specifying a callback, like this:
 
@@ -721,7 +721,7 @@ As you can see we're returning the previous array of to-do's plus our new to-do.
 
 Here's a rule of thumb to help pick which one to use:
 
-Are you updating state based on the previous state? Yes? Use the callback. No? Specify the new value.
+Are you updating state based on the previous state? (This includes nested state) Yes? Use the callback. No? Specify the new value.
 
 To quote [the documentation](https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous):
 
@@ -741,7 +741,7 @@ into
 <TodoForm onSubmit={handleSubmit} />
 ```
 
-So, the submitting works but nothings happening. Why? We haven't told `<TodoList />` to use `App`'s state yet! Let's get to it. On our `<TodoList />`, add the `todos` property with value `todos` like so:
+So, the submitting works but nothing is happening. Why? We haven't told `<TodoList />` to use `App's` state yet! Let's get to it. On our `<TodoList />`, add the `todos` property with value `todos` like so:
 
 ```jsx
 <TodoList todos={todos} />
@@ -819,7 +819,7 @@ interface Props extends HTMLProps<HTMLFormElement> {
 }
 ```
 
-We're telling TypeScript we're expecting a method that accepts an event as a parameter and doesn't return anyting; `void`. After you've updated `TodoForm` it should look like this:
+We're telling TypeScript we're expecting a method that accepts an event as a parameter and doesn't return anything; `void`. After you've updated `TodoForm` it should look like this:
 
 ```jsx
 import React, { HTMLProps, ChangeEvent } from "react";
@@ -946,4 +946,4 @@ The final product should look like this:
 
 ## Closing thoughts
 
-That's it for this tutorial. I hope I was able to convince you to use Typescript if you weren't sure yet and that you've learned how to get started with using TypeScript and React together. If you're up for a challenge you can try and implement functionality to finish a to-do or disabling the create button if there is no text inside the to-do input. Good luck!
+That's it for this tutorial. I hope you enjoyed it and that you've learned how to get started with using TypeScript and React together. Also, I hope I was able to show you the benefits of using Typescript if you weren't sure yet. If you're up for a challenge you can try and implement functionality to finish a to-do or disabling the create button if there is no text inside the to-do input. Good luck!
