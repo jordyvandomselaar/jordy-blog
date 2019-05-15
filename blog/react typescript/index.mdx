@@ -46,7 +46,7 @@ I've added examples using CodeSandbox throughout this tutorial so you can hack a
 
 ## Getting started
 
-For this tutorial, we'll be using [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app). To get started run the following commands in your terminal; `npx create-react-app todoApp —typescript`, this will scaffold a new TypeScript React app. _This could take a while._
+For this tutorial, we'll be using [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app). To get started run the following commands in your terminal; `npx create-react-app todoapp -—typescript`, this will scaffold a new TypeScript React app. _This could take a while._
 
 When it's done you'll have the following file structure:
 
@@ -623,7 +623,7 @@ const [todos, setTodos] = useState([]);
 into
 
 ```jsx
-const [todos, setTodos] = useState < Array < Todo >> [];
+const [todos, setTodos] = useState<Array<Todo>> ([]);
 ```
 
 As you can see, `useState` is a generic method. You can also see that it's possible to nest generics.
@@ -669,13 +669,13 @@ What this means is that TypeScript doesn't know what type `event` has, a variabl
 Let's tell TypeScript what type `event` is. Change
 
 ```jsx
-event;
+event
 ```
 
 Into
 
 ```jsx
-(event: FormEvent<HTMLFormElement>);
+(event: FormEvent<HTMLFormElement>)
 ```
 
 _Note: Don't forget to import FormEvent from "react"!_
@@ -855,7 +855,19 @@ const TodoForm = ({ onInputChange, ...props }: Props) => {
 export default TodoForm;
 ```
 
-You might notice this piece of code: `{ onInputChange, ...props }`. In React, `props` is an `object`. Right now we're `destructuring` the `props` object into 2 variables: `onInputChange` and `props`. By doing this we can use `onInputChange` whilst automatically passing the rest of the props to `form`. Let's update `src/components/app.tsx` to use this new property as well. Change
+You might notice this piece of code: `{ onInputChange, ...props }`. In React, `props` is an `object`. Right now we're `destructuring` the `props` object into 2 variables: `onInputChange` and `props`. By doing this we can use `onInputChange` whilst automatically passing the rest of the props to `form`. Let's update `src/components/app.tsx` to use this new property as well.
+
+First, let's create a new method to update our state whenever the value of our input changes:
+
+```typescript
+const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTodoValue(event.currentTarget.value);
+  };
+```
+
+Again, don't forget adding the `ChangeEvent<HTMLInputElement>` interface!
+
+Now, let's add our new method to the `TodoForm`. Change
 
 ```jsx
 <TodoForm onSubmit={handleSubmit} />
