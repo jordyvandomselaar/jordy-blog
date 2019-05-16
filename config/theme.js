@@ -1,8 +1,8 @@
-import { lighten } from 'polished'
+import { lighten } from 'polished';
 
 const colors = {
-  primary: '#ff6464', // Color for buttons or links
-  primaryLight: lighten(0.05, '#ff6464'),
+  primary: '#673AB7', // Color for buttons or links
+  primaryLight: lighten(0.05, '#673AB7'),
   bg: 'white', // Background color
   grey: {
     dark: 'rgba(0, 0, 0, 0.9)',
@@ -14,7 +14,7 @@ const colors = {
 }
 
 const transitions = {
-  normal: '0.5s',
+  normal: '0.5s'
 }
 
 const fontSize = {
@@ -28,7 +28,7 @@ const fontFamily = {
 
 const breakpoints = {
   tablet: '1200px',
-  phone: '600px',
+  phone: '600px'
 }
 
 const theme = {
