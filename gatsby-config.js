@@ -23,6 +23,9 @@ module.exports = {
       resolve: 'gatsby-plugin-google-analytics',
       options: {
         trackingId: config.googleAnalyticsID,
+        gtagConfig: {
+          anonymize_ip: true,
+        },
       },
     },
     {
