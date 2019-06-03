@@ -14,6 +14,10 @@ const Wrapper = styled.header`
   margin-right: -1rem;
   padding: 2rem 2rem 5rem 2rem;
   box-shadow: inset 0px -10px 30px 0px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+    margin-right: 0;
+  }
 `
 
 const Content = styled.div`

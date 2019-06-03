@@ -22,6 +22,7 @@ const Content = styled.article`
   }
   @media (max-width: ${props => props.theme.breakpoints.phone}) {
     padding: 2rem 1.5rem;
+    overflow: hidden;
   }
   p {
     font-size: 1.1rem;
