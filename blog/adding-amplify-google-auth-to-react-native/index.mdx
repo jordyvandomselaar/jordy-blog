@@ -6,5 +6,26 @@ categories:
   - react-native
   - AWS
   - AWS Amplify
+  - TypeScript
 ---
 
+## Intro
+
+In this post, we'll create a React Native project, using [AWS Amplify](https://aws.amazon.com/amplify/) to allow our users to log in with their Google accounts.
+
+Amplify helps you add things like authentication, APIs, databases, hosting, and much more to your project by doing the heavy lifting for you.
+
+This tutorial will explain how to use Amplify's Auth module with a Typescript React Native app. It'll cover both React Native CLI and Expo.
+
+I'm writing this blog post because when I tried to implement Amplify Auth in my React Native app, I ran into some problems. Through this tutorial, I hope I can make it easier for both you and future me to get started!
+
+For this tutorial, we'll be using [React Native CLI](https://reactnative.dev/docs/getting-started). I'll tell you when there's something specific to Expo or to React Native CLI.
+
+## Getting started
+
+First, we'll scaffold a new React Native app. To do so, we'll use the official tutorial for React Native CLI Quickstart. I'm using a Mac and Android phone, but you can select whichever platforms apply to you.
+
+1. Scaffold a new project with Expo or the React Native CLI: [https://reactnative.dev/docs/getting-started](https://reactnative.dev/docs/getting-started), either Expo or React Native CLI is fine. Expo is easier to get started with whilst React Native CLI offers more freedom (and support for native modules).
+    - When running `expo init`, you can pick a TypeScript template. If you're using React Native CLI, you'll want to use the following command: `npx react-native init MyTSProject --template react-native-template-typescript` 
+2. You should now have a folder with the same name as you entered while scaffolding your app.
+3. CONTINUE EXPLAINING HOW TO INSTALL AWS -----
