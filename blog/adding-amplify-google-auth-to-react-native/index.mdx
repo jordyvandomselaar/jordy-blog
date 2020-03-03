@@ -1,6 +1,6 @@
 ---
 date: "2020-03-02"
-title: "Let's add Google auth to our React Native app with AWS Amplify!"
+title: "Let's Add Google Auth To Our React Native App With AWS Amplify!"
 categories:
   - React
   - react-native
@@ -41,7 +41,7 @@ Phew. We've gotten this far! Now let's add Amplify!
 
 **Before following these steps, install Amplify first. To do that, you can follow these steps: [https://aws-amplify.github.io/docs/cli-toolchain/quickstart?sdk=js](https://aws-amplify.github.io/docs/cli-toolchain/quickstart?sdk=js)**
 
-1. In the root of your project, run `amplify init`.
+1. At the root of your project, run `amplify init`.
 2. Specify the name of your project, the default is usually fine.
 3. Specify a name for your environment, since this is your local development environment, enter "develop".
 4. Pick your default editor, if it's not listed, pick "none".
@@ -93,3 +93,19 @@ Try "amplify add api" to create a backend API and then "amplify publish" to depl
 You've successfully added AWS Amplify! 🚀️
 
 ## Adding Amplify Auth
+
+1. An the root of your project, run `amplify auth`.
+2. Choose "Default configuration with Social Provider (Federation)".
+3. Choose "Username".
+4. Choose "No, I am done.".
+5. Pick any prefix, the default is fine.
+6. For the redirect signin URI, enter `myapp://` where myapp is the name of your app.
+7. One redirect signin URI is fine, enter N.
+8. For redirect signout URI, also enter `myapp://`. Again, replace myapp the name of your app.
+9. One redirect signout URI is fine, enter N. 
+10. Select the auth providers you'd like to support, you can move up/down with arrow keys and select options with your "space" key. When you're done choosing, hit "enter". For this tutorial we're going to pick "Google".
+11. You'll notice AWS asking you for your Google OAuth credentials.
+
+### Getting Google OAuth credentials
+
+
