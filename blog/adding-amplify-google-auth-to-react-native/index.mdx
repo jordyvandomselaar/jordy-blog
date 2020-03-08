@@ -35,7 +35,7 @@ You should now see something like this:
 
 ![Android react native default screen](./android-react-native-default-screen.png)
 
-Phew. We've gotten this far! Now let's add Amplify!
+Let's add Amplify!
 
 ## Adding AWS Amplify
 
@@ -94,7 +94,7 @@ You've successfully added AWS Amplify! 🚀️
 
 ## Adding Amplify Auth
 
-1. An the root of your project, run `amplify auth`.
+1. In the root of your project, run `amplify auth`.
 2. Choose "Default configuration with Social Provider (Federation)".
 3. Choose "Username".
 4. Choose "No, I am done.".
@@ -103,9 +103,68 @@ You've successfully added AWS Amplify! 🚀️
 7. One redirect signin URI is fine, enter N.
 8. For redirect signout URI, also enter `myapp://`. Again, replace myapp the name of your app.
 9. One redirect signout URI is fine, enter N. 
-10. Select the auth providers you'd like to support, you can move up/down with arrow keys and select options with your "space" key. When you're done choosing, hit "enter". For this tutorial we're going to pick "Google".
+10. Select the auth providers you'd like to support, you can move up/down with arrow keys and select options with your spacebar. When you're done choosing, hit "enter". For this tutorial we're going to pick "Google".
 11. You'll notice AWS asking you for your Google OAuth credentials.
 
 ### Getting Google OAuth credentials
 
+First, go to the Google API Developer Console: [https://console.developers.google.com/](https://console.developers.google.com/)
+
+Select a project:
+
+![Select project](./select-project.png)
+
+Select an existing one or create a new one:
+
+![Create new project or select an existing one](./new-project.png)
+
+If you're creating a new one, enter your project information and click "create".
+
+#### Creating an OAuth consent screen
+
+Before Google allows you to create your OAuth credentials, you have to set up a consent screen first.
+
+Head to the OAuth consent screen:
+
+![Head to the OAuth consent screen](./oauth-consent-link.png)
+
+1. Choose the user type. For this tutorial, we'll use "External". Click "create".
+2. Enter an application name, which is most likely the same as the other few times they asked 😉️.
+3. Optionally, you can upload an application logo.
+4. Leave the rest as-is and click Save.
+
+#### Getting the credentials
+
+Head to the credentials screen:
+
+![Head to the credentials screen](./credentials-link.png)
+
+Create new oauth credentials:
+
+![Create credentials](./create-credentials.png)
+
+1. For application type, choose "Web application".
+2. Enter a name e.g: "myapp, Amplify client".
+3. Click "create".
+4. Copy the client id and paste it into your terminal
+5. Copy the client secret and paste it into your terminal
+6. In your terminal, run `amplify push`
+7. This might take a while. AWS is creating everything it needs to get your authentication running!
+8. Take note of your hosted UI Endpoint, it'll look something like this: `https://myappbcfc15bf-bcfc15bf-develop.auth.eu-west-1.amazoncognito.com`, this is your Cognito endpoint URI, take note as you'll need it for the next steps!
+
+The next step is letting Google know you trust your Amplify Cognito pool:
+
+## Configuring your Google oauth client to work with Amplify
+
+The last step of configuring things is here!
+
+Go to the edit screen of your OAuth client:
+
+![Edit OAuth client](./edit-oauth-client.png)
+
+1. Add an authorized JavaScript origin with your Cognito endpoint URI from earlier, without the `/` at the end.
+2. Add an authorized redirect URI, it's the same as your authorized JavaScript origin but with `/oauth2/idpresponse` at the end.
+3. Hit save.
+
+That's it! Now let's go back to our app and make it do something.
 
