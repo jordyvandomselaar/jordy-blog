@@ -9,6 +9,8 @@ categories:
   - TypeScript
 ---
 
+import {Tip} from "../../src/components"
+
 ## Intro
 
 In this post, we'll create a React Native project, using [AWS Amplify](https://aws.amazon.com/amplify/) to allow our users to log in with their Google accounts.
@@ -166,5 +168,226 @@ Go to the edit screen of your OAuth client:
 2. Add an authorized redirect URI, it's the same as your authorized JavaScript origin but with `/oauth2/idpresponse` at the end.
 3. Hit save.
 
-That's it! Now let's go back to our app and make it do something.
+That's it! Cognito is now configured and the only thing left to do is let users open the cognito login form.
 
+## Creating a login screen
+
+First, we'll need to install Amplify as NPM dependencies. To do so, run `npm i -S aws-amplify aws-amplify-react-native`. AWS has added types already.
+
+In `App.tsx`, remove all the boilerplate of react-native and create a new App component. We'll render "Hello, please login." if the user has not been authenticated yet, if they are, we'll render "Hello, {name}".
+
+```ts
+import React, {FunctionComponent, useState} from 'react';
+import {SafeAreaView, Text} from 'react-native';
+
+interface User {
+    name: string;
+}
+
+const App: FunctionComponent = () => {
+  const [user, setUser] = useState<User|null >(null);
+
+  return <SafeAreaView>
+      <Text>Hello, {user?.name ?? "please login."}</Text>
+  </SafeAreaView>;
+};
+
+export default App;
+```
+
+To configure Amplify:
+
+Add
+
+```ts
+import Amplify from "aws-amplify
+import config from "./aws-exports"
+```
+
+to the top and right beneath your imports add
+
+```ts
+Amplify.configure(config);
+
+```
+
+That's it. Now let's create a login button:
+
+```ts
+import React, {FunctionComponent, useCallback, useState} from 'react';
+import {Button, SafeAreaView, Text} from 'react-native';
+import {Auth} from "aws-amplify"
+
+interface User {
+    name: string;
+}
+
+const App: FunctionComponent = () => {
+    const [user, setUser] = useState<User | null>(null);
+
+    const signin = useCallback(() => {
+        Auth.federatedSignIn({provider: "google"});
+    }, []);
+
+    return <SafeAreaView>
+        <>
+            <Text>Hello, {user?.name ?? "please login."}</Text>
+
+            {user === null && <Button title="Login with Google" onPress={signin} />}
+            </>
+    </SafeAreaView>;
+};
+
+export default App;
+```
+
+<Tip>
+
+Using TypeScript? Then this might give you a type error:
+
+```ts
+        Auth.federatedSignIn({provider: "Google"});
+```
+
+You can either choose to add `@ts-ignore`, or you can use
+
+```ts
+Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google});
+```
+
+</Tip>
+
+<Tip>
+
+If you get this error:
+
+> Unable to resolve module `@react-native-community/netinfo`
+
+1. Run `npm i -S @react-native-community/netinfo`.
+2. Inside the IOS folder, run `pod install`
+3. Rebuild & re-run the app
+
+</Tip>
+
+Your app should now look like this:
+
+![Login screen with login button](./amplify-login-button-screen.png)
+
+When you click on "LOGIN WITH GOOGLE" you'll see your web browser opening you'll be able to log in with your Google account. When you log in you'll notice a blank screen. Time for the next part!
+
+## Adding an URI handler to your app
+
+What happens is that after logging in, AWS redirects you to your redirect signin URI but your app isn't catching this URI yet! Let's fix that. After following any of these steps restart your app.
+
+### Expo apps
+
+Inside `app.json` add
+
+```json
+{
+  "expo": {
+    "scheme": "myapp"
+  }
+}
+```
+
+### Android
+
+First open `android/app/src/main/AndroidManifest.xml`, then add a new intent:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.myapp">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+            android:name=".MainApplication"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:allowBackup="false"
+            android:theme="@style/AppTheme">
+        <activity
+                android:name=".MainActivity"
+                android:label="@string/app_name"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+                android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter android:label="filter_react_native"> <!-- THE NEW INTENT -->
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="myapp"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
+    </application>
+
+</manifest>
+```
+
+### IOS
+
+First open `ios/Inventory/Info.plist`, then add
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>myApp</string>
+        </array>
+    </dict>
+</array>
+```
+
+## Storing the authenticated user in your state
+
+Now your app catches the redirect URI. After logging in you should now see the homescreen of your app again. Amplify allows you to retrieve the current user, let's do that and store the logged in user in our state so we can show either a greeting or a log in button.
+
+In `App.tsx` add
+
+```ts
+useEffect(() => {
+    Auth.currentAuthenticatedUser()
+        .then(user => {
+            user.getUserData((err?: Error, userData?: UserData) => {
+               setUser({
+                   email: userData?.UserAttributes.find(ud => ud.Name === "email")?.Value
+               })
+            });
+        })
+        .catch(error => {
+            setUser(null);
+        });
+}, []);
+```
+
+Let's step through it
+
+```ts
+Auth.currentAuthenticatedUser()
+```
+
+Returns a promise with the currently signed in user. This user can already be logged in when opening the app. If there is no user, it rejects. Amplify persists the user automatically so they remain logged in.
+
+```ts
+user.getUserData((err?: Error, userData?: UserData) => {}
+```
+
+Retrieves the user's data. This data can be configured in your user pool. We then loop through all user data until we find an item containing the user's e-mail, which we then add to our state.
+
+You should now see something like this:
+
+![Logged in screen](./logged-in-screen.png)
+
+Now it's up to you to make something pretty!
+
+## Closing words
+
+I hope you've learned how to set up AWS Amplify in your React Native app. 
