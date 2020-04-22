@@ -10,6 +10,7 @@ categories:
 ---
 
 import {Tip} from "../../src/components"
+import {Link} from "gatsby"
 
 ## Intro
 
@@ -17,7 +18,7 @@ In this post, we'll create a React Native project, using [AWS Amplify](https://a
 
 Amplify helps you add things like authentication, APIs, databases, hosting, and much more to your project by doing the heavy lifting for you.
 
-This tutorial will explain how to use Amplify's Auth module with a Typescript React Native app. It'll cover both React Native CLI and Expo.
+This tutorial will explain how to use Amplify's Auth module with a Typescript React Native app. It'll cover both React Native CLI and Expo. If you're not familiar with TypeScript yet, you can read this post: <Link to="/from-zero-to-hero-with-react-and-type-script-lets-build-another-to-do-app">From zero to hero with React and TypeScript: Let's build another to-do app!</Link>
 
 I'm writing this blog post because when I tried to implement Amplify Auth in my React Native app, I ran into some problems. Through this tutorial, I hope I can make it easier for both you and future me to get started!
 
@@ -28,7 +29,7 @@ For this tutorial, we'll be using [React Native CLI](https://reactnative.dev/doc
 First, we'll scaffold a new React Native app. To do so, we'll use the official tutorial for React Native CLI Quickstart. I'm using a Mac and Android phone, but you can select whichever platforms apply to you.
 
 1. Scaffold a new project with Expo or the React Native CLI: [https://reactnative.dev/docs/getting-started](https://reactnative.dev/docs/getting-started), either Expo or React Native CLI is fine. Expo is easier to get started with whilst React Native CLI offers more freedom (and support for native modules).
-    - When running `expo init`, you can pick a TypeScript template. If you're using React Native CLI, you'll want to use the following command: `npx react-native init MyTSProject --template react-native-template-typescript` 
+    - When running `expo init`, you can pick a TypeScript template. If you're using React Native CLI, you'll want to use the following command: `npx react-native init MyTSProject --template react-native-template-typescript`
 2. You should now have a folder with the same name as you entered while scaffolding your app. From here on out we'll call it "myapp".
 3. Start an emulator, Expo has tutorials for [IOS](https://docs.expo.io/versions/latest/workflow/ios-simulator/) and [Android](https://docs.expo.io/versions/v36.0.0/workflow/android-studio-emulator/).
 4. Now, depending on the platform, either run `npm run android` or `npm run ios`.
@@ -61,20 +62,20 @@ You should now be greeted by this message:
 CREATE_IN_PROGRESS DeploymentBucket             AWS::S3::Bucket            Tue Mar 03 2020 11:45:13 GMT+0100 (Central European Standard Time) Resource creation Initiated
 CREATE_IN_PROGRESS UnauthRole                   AWS::IAM::Role             Tue Mar 03 2020 11:45:13 GMT+0100 (Central European Standard Time) Resource creation Initiated
 CREATE_IN_PROGRESS AuthRole                     AWS::IAM::Role             Tue Mar 03 2020 11:45:13 GMT+0100 (Central European Standard Time) Resource creation Initiated
-CREATE_IN_PROGRESS AuthRole                     AWS::IAM::Role             Tue Mar 03 2020 11:45:12 GMT+0100 (Central European Standard Time)                            
-CREATE_IN_PROGRESS UnauthRole                   AWS::IAM::Role             Tue Mar 03 2020 11:45:12 GMT+0100 (Central European Standard Time)                            
-CREATE_IN_PROGRESS DeploymentBucket             AWS::S3::Bucket            Tue Mar 03 2020 11:45:12 GMT+0100 (Central European Standard Time)                            
-CREATE_IN_PROGRESS amplify-myapp-develop-114507 AWS::CloudFormation::Stack Tue Mar 03 2020 11:45:09 GMT+0100 (Central European Standard Time) User Initiated             
+CREATE_IN_PROGRESS AuthRole                     AWS::IAM::Role             Tue Mar 03 2020 11:45:12 GMT+0100 (Central European Standard Time)
+CREATE_IN_PROGRESS UnauthRole                   AWS::IAM::Role             Tue Mar 03 2020 11:45:12 GMT+0100 (Central European Standard Time)
+CREATE_IN_PROGRESS DeploymentBucket             AWS::S3::Bucket            Tue Mar 03 2020 11:45:12 GMT+0100 (Central European Standard Time)
+CREATE_IN_PROGRESS amplify-myapp-develop-114507 AWS::CloudFormation::Stack Tue Mar 03 2020 11:45:09 GMT+0100 (Central European Standard Time) User Initiated
 ⠏ Initializing project in the cloud...
 
-CREATE_COMPLETE UnauthRole AWS::IAM::Role Tue Mar 03 2020 11:45:27 GMT+0100 (Central European Standard Time) 
-CREATE_COMPLETE AuthRole   AWS::IAM::Role Tue Mar 03 2020 11:45:27 GMT+0100 (Central European Standard Time) 
+CREATE_COMPLETE UnauthRole AWS::IAM::Role Tue Mar 03 2020 11:45:27 GMT+0100 (Central European Standard Time)
+CREATE_COMPLETE AuthRole   AWS::IAM::Role Tue Mar 03 2020 11:45:27 GMT+0100 (Central European Standard Time)
 ⠦ Initializing project in the cloud...
 
-CREATE_COMPLETE DeploymentBucket AWS::S3::Bucket Tue Mar 03 2020 11:45:34 GMT+0100 (Central European Standard Time) 
+CREATE_COMPLETE DeploymentBucket AWS::S3::Bucket Tue Mar 03 2020 11:45:34 GMT+0100 (Central European Standard Time)
 ⠇ Initializing project in the cloud...
 
-CREATE_COMPLETE amplify-myapp-develop-114507 AWS::CloudFormation::Stack Tue Mar 03 2020 11:45:36 GMT+0100 (Central European Standard Time) 
+CREATE_COMPLETE amplify-myapp-develop-114507 AWS::CloudFormation::Stack Tue Mar 03 2020 11:45:36 GMT+0100 (Central European Standard Time)
 ✔ Successfully created initial AWS cloud resources for deployments.
 ✔ Initialized provider successfully.
 Initialized your environment successfully.
@@ -104,7 +105,7 @@ You've successfully added AWS Amplify! 🚀️
 6. For the redirect signin URI, enter `myapp://` where myapp is the name of your app.
 7. One redirect signin URI is fine, enter N.
 8. For redirect signout URI, also enter `myapp://`. Again, replace myapp the name of your app.
-9. One redirect signout URI is fine, enter N. 
+9. One redirect signout URI is fine, enter N.
 10. Select the auth providers you'd like to support, you can move up/down with arrow keys and select options with your spacebar. When you're done choosing, hit "enter". For this tutorial we're going to pick "Google".
 11. You'll notice AWS asking you for your Google OAuth credentials.
 
@@ -141,7 +142,7 @@ Head to the credentials screen:
 
 ![Head to the credentials screen](./credentials-link.png)
 
-Create new oauth credentials:
+Create new OAuth credentials:
 
 ![Create credentials](./create-credentials.png)
 
@@ -156,7 +157,7 @@ Create new oauth credentials:
 
 The next step is letting Google know you trust your Amplify Cognito pool:
 
-## Configuring your Google oauth client to work with Amplify
+## Configuring your Google OAuth client to work with Amplify
 
 The last step of configuring things is here!
 
@@ -165,7 +166,7 @@ Go to the edit screen of your OAuth client:
 ![Edit OAuth client](./edit-oauth-client.png)
 
 1. Add an authorized JavaScript origin with your Cognito endpoint URI from earlier, without the `/` at the end.
-2. Add an authorized redirect URI, it's the same as your authorized JavaScript origin but with `/oauth2/idpresponse` at the end.
+2. Add an authorized redirect URI, it's the same as your authorized JavaScript origin but with `/OAuth2/idpresponse` at the end.
 3. Hit save.
 
 That's it! Cognito is now configured and the only thing left to do is let users open the cognito login form.
@@ -386,8 +387,10 @@ You should now see something like this:
 
 ![Logged in screen](./logged-in-screen.png)
 
-Now it's up to you to make something pretty!
+That's it!
 
 ## Closing words
 
-I hope you've learned how to set up AWS Amplify in your React Native app. 
+By now you've installed AWS Amplify in your react-native app and your users are able to log in. Now go ahead and create something awesome!
+
+See a typo or is there something incorrect? Please let me know through the contact form!
