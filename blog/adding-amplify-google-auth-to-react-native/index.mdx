@@ -12,11 +12,11 @@ categories:
 import {Tip} from "../../src/components"
 import {Link} from "gatsby"
 
-## Intro
-
 In this post, we'll create a React Native project, using [AWS Amplify](https://aws.amazon.com/amplify/) to allow our users to log in with their Google accounts.
 
 Amplify helps you add things like authentication, APIs, databases, hosting, and much more to your project by doing the heavy lifting for you.
+
+## Intro
 
 This tutorial will explain how to use Amplify's Auth module with a Typescript React Native app. It'll cover both React Native CLI and Expo. If you're not familiar with TypeScript yet, you can read this post: <Link to="/from-zero-to-hero-with-react-and-type-script-lets-build-another-to-do-app">From zero to hero with React and TypeScript: Let's build another to-do app!</Link>
 
@@ -201,7 +201,7 @@ To configure Amplify:
 Add
 
 ```ts
-import Amplify from "aws-amplify
+import Amplify from "aws-amplify"
 import config from "./aws-exports"
 ```
 
@@ -209,7 +209,6 @@ to the top and right beneath your imports add
 
 ```ts
 Amplify.configure(config);
-
 ```
 
 That's it. Now let's create a login button:
@@ -292,7 +291,9 @@ Inside `app.json` add
 }
 ```
 
-### Android
+### React Native CLI apps
+
+#### Android
 
 First open `android/app/src/main/AndroidManifest.xml`, then add a new intent:
 
@@ -331,7 +332,7 @@ First open `android/app/src/main/AndroidManifest.xml`, then add a new intent:
 </manifest>
 ```
 
-### IOS
+#### IOS
 
 First open `ios/Inventory/Info.plist`, then add
 
