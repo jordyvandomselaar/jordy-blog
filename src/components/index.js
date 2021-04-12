@@ -7,5 +7,6 @@ import SectionTitle from './SectionTitle'
 import SEO from './SEO'
 import Subline from './Subline'
 import Wrapper from './Wrapper'
+import Tip from "./Tip"
 
-export { Article, Button, Header, Layout, PrevNext, SectionTitle, SEO, Subline, Wrapper }
+export { Article, Button, Header, Layout, PrevNext, SectionTitle, SEO, Subline, Wrapper, Tip}
